@@ -1,0 +1,54 @@
+"@startuml db_diagram"
+
+!define PRIMARY_KEY(x) <b><color:blue>x</color></b>
+!define FOREIGN_KEY(x) <color:green>x</color>
+
+hide circle
+
+entity User {
+    +id: AutoField
+    --
+    +email: EmailField          | unique
+    +username: CharField        | blank
+    +is_staff: BooleanField     | default=false
+    +is_active: BooleanField    | default=true
+    +whatsapp_phone: CharField  | blank, null, db_index
+    +last_name: CharField       | null
+    +first_name: CharField      | null
+    --
+    +full_name(): String
+    --
+    +USERNAME_FIELD = 'email'
+    +REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
+}
+
+entity Cliente extends User{}
+
+entity Tecnico {
+    +id: AutoField
+    --
+    +last_name: CharField       | not null
+    +first_name: CharField      | not null
+    --
+    +full_name(): String
+    --
+    +REQUIRED_FIELDS = ['first_name', 'last_name']
+}
+
+entity Pedido {
+    +id: AutoField
+    --
+    +hours_worked: IntegerField
+    +type_request: IntegerField   | default=0, db_index
+    +client: ForeignKey(User)
+    +scheme: ForeignKey(Scheme)   | null
+    +technician: ForeignKey(Tecnico) | null
+    --
+    +TIPO_PEDIDO = [(0, 'Solicitud'), (1, 'Pedido')]
+}
+
+Pedido "*" -up- "1" Tecnico
+Pedido "*" -up- "1" Cliente
+Pedido "*" - "1" Scheme
+
+@enduml

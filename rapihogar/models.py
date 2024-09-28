@@ -60,6 +60,30 @@ class Company(models.Model):
         verbose_name = _('Empresa')
         verbose_name_plural = _('Empresas')
 
+class Tecnico(models.Model):
+    last_name = models.CharField(
+        max_length=100,
+        null=False,
+    )
+    first_name = models.CharField(
+        max_length=100,
+        null=False,
+    )
+    
+    @property
+    def full_name(self):
+        return u"{} {}".format(self.first_name if self.first_name else '',
+                               self.last_name if self.last_name else '')
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    objects = UserManager()
+
+    class Meta:
+        app_label = 'rapihogar'
+        verbose_name = _('RapiHogar Tecnico')
+        verbose_name_plural = _('RapiHogar Tecnicos')  
 
 class Pedido(models.Model):
     SOLICITUD = 0
@@ -82,6 +106,12 @@ class Pedido(models.Model):
     scheme = models.ForeignKey(
         Scheme,
         null=True,
+        on_delete=models.CASCADE
+    )
+    technician = models.ForeignKey(
+        Tecnico,
+        null=True,
+        verbose_name='tecnico',
         on_delete=models.CASCADE
     )
     hours_worked = models.IntegerField(default=0)

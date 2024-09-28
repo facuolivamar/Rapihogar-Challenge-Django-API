@@ -5,7 +5,9 @@
     "fields": {
         "type_request": 1,
         "client": 2,
-        "scheme": 1
+        "scheme": 1,
+        "technician": 1,
+        "hours_worked": 10
     }
 }
 ]

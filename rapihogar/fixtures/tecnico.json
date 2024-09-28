@@ -1,0 +1,43 @@
+[
+    {
+        "model": "rapihogar.tecnico",
+        "pk": 1,
+        "fields": {
+            "first_name": "Juan1",
+            "last_name": "Perez1"
+        }
+    },
+    {
+        "model": "rapihogar.tecnico",
+        "pk": 2,
+        "fields": {
+            "first_name": "Juan2",
+            "last_name": "Perez2"
+        }
+    },
+    {
+        "model": "rapihogar.tecnico",
+        "pk": 3,
+        "fields": {
+            "first_name": "Juan3",
+            "last_name": "Perez3"
+        }
+    },
+    {
+        "model": "rapihogar.tecnico",
+        "pk": 4,
+        "fields": {
+            "first_name": "Juan4",
+            "last_name": "Perez4"
+        }
+    },
+    {
+        "model": "rapihogar.tecnico",
+        "pk": 5,
+        "fields": {
+            "first_name": "Juan5",
+            "last_name": "Perez5"
+        }
+    }
+    ]
+    

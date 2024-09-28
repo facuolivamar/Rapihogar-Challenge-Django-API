@@ -24,13 +24,13 @@ class TecnicoSerializer(serializers.ModelSerializer):
         return obj.full_name
 
     def get_total_paid(self, obj):
-        return self.services[obj.id].calc_total_paid()
+        return self.services[obj.id].get_total_paid()
 
     def get_hours_worked(self, obj):
-        return self.services[obj.id].calc_hours_worked()
+        return self.services[obj.id].get_hours_worked()
 
     def get_pedidos_count(self, obj):
-        return self.services[obj.id].calc_pedidos_count()
+        return self.services[obj.id].get_pedidos_count()
 
     class Meta:
         model = Tecnico

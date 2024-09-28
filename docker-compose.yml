@@ -1,6 +1,18 @@
 version: "3"
 
 services:
+  db:
+    image: postgres:13
+    container_name: rapihogar-postgres
+    volumes:
+      - rapihogar-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=rapihogar
+      - POSTGRES_USER=rapihogar
+      - POSTGRES_PASSWORD=rapihogar
+
   nginx:
     build: ./nginx
     ports:
@@ -11,10 +23,19 @@ services:
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
+    environment:
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=rapihogar
+      - DB_USER=rapihogar
+      - DB_PASSWORD=rapihogar
+      - DB_HOST=rapihogar-postgres
+      - DB_PORT=5432
     ports:
       - "8000:8000"
     expose:
       - 8000
+    depends_on:
+      - db
 
+volumes:
+  rapihogar-data:

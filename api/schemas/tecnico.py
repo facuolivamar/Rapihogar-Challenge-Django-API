@@ -1,13 +1,6 @@
 from rest_framework import serializers
-from rapihogar.models import Company, Tecnico, Pedido
-from api.services import TecnicoService
-
-class CompanySerializer(serializers.ModelSerializer):
-  
-    class Meta:
-        model = Company
-        fields = '__all__'
-
+from rapihogar.models import Tecnico
+from api.services.tecnico import TecnicoService
 
 class TecnicoSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
@@ -59,8 +52,3 @@ class ReportSerializer(serializers.Serializer):
     technicians_below_average = TecnicoReportSerializer(many=True)
     technician_with_lowest_paid = TecnicoReportSerializer()
     technician_with_highest_paid = TecnicoReportSerializer()
-
-class PedidoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Pedido
-        fields = '__all__'

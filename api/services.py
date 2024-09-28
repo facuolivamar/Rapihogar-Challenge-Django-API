@@ -32,3 +32,23 @@ class TecnicoService:
     def get_hours_worked(self):
         return self.hours_worked
 
+class ReportService:
+    def __init__(self, queryset):
+        self.tecnicos = [TecnicoService(tecnico) for tecnico in queryset]
+        self.total_paid = sum([tecnico.get_total_paid() for tecnico in self.tecnicos])
+        self.average_paid = self.total_paid / len(self.tecnicos)
+        self.tecnicos_below_average = [tecnico for tecnico in self.tecnicos if tecnico.get_total_paid() < self.average_paid]
+        self.technician_with_lowest_paid = min(self.tecnicos, key = lambda tecnico: tecnico.get_total_paid())
+        self.technician_with_highest_paid = max(self.tecnicos, key = lambda tecnico: tecnico.get_total_paid())
+        
+    def get_average_paid(self):
+        return self.average_paid
+    
+    def get_technicians_below_average(self):
+        return self.tecnicos_below_average
+    
+    def get_technician_with_lowest_paid(self):
+        return self.technician_with_lowest_paid
+    
+    def get_technician_with_highest_paid(self):
+        return self.technician_with_highest_paid

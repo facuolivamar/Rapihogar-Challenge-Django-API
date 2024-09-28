@@ -36,7 +36,7 @@ class CompanyAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "email", "phone", "website")
 
 class PedidoAdmin(admin.ModelAdmin):
-    list_display = ("id", "type_request", "scheme__name")
+    list_display = ("id", "type_request", "scheme__name", "technician")
     list_filter = ["type_request", "scheme__name"]
 
 admin.site.register(User, UserAdmin)

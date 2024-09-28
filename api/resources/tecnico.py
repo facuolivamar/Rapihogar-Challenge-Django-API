@@ -1,18 +1,14 @@
-from rest_framework import viewsets
-from rapihogar.models import Company, Tecnico, Pedido
 from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 from rest_framework.filters import OrderingFilter
-from api.serializers import CompanySerializer, TecnicoSerializer, ReportSerializer, PedidoSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from api.services import ReportService
 
+from rapihogar.models import Tecnico
+from api.schemas.tecnico import TecnicoSerializer, ReportSerializer
+from api.services.tecnico import ReportService
 
-class CompanyViewSet(viewsets.ModelViewSet):
-    serializer_class = CompanySerializer
-    queryset = Company.objects.filter()
 
 class TecnicoFilter(filters.FilterSet):
     first_name = filters.CharFilter(field_name="first_name", lookup_expr="icontains")
@@ -33,7 +29,7 @@ class TecnicoListView(generics.ListAPIView):
 
 class TecnicoReportView(APIView):
     def get(self, request):
-        tecnicos = Tecnico.objects.all()  # Filtra si es necesario
+        tecnicos = Tecnico.objects.all()
         report_service = ReportService(tecnicos)
 
         data = {
@@ -45,7 +41,3 @@ class TecnicoReportView(APIView):
 
         serializer = ReportSerializer(data)
         return Response(serializer.data)
-
-class PedidoUpdateView(generics.UpdateAPIView):
-    queryset = Pedido.objects.all()
-    serializer_class = PedidoSerializer

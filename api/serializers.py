@@ -36,6 +36,30 @@ class TecnicoSerializer(serializers.ModelSerializer):
         model = Tecnico
         fields = ['id', 'full_name', 'total_paid', 'hours_worked', 'pedidos_count']
 
+class TecnicoReportSerializer(serializers.ModelSerializer):
+    total_paid = serializers.FloatField()
+    hours_worked = serializers.FloatField()
+    pedidos_count = serializers.IntegerField()
+    
+    def get_total_paid(self, obj):
+        return obj.get_total_paid()
+    
+    def get_hours_worked(self, obj):
+        return obj.get_hours_worked()
+    
+    def get_pedidos_count(self, obj):
+        return obj.get_pedidos_count()
+    
+    class Meta:
+        model = Tecnico
+        fields = ['id', 'full_name', 'total_paid', 'hours_worked', 'pedidos_count']
+
+class ReportSerializer(serializers.Serializer):
+    average_paid = serializers.FloatField()
+    technicians_below_average = TecnicoReportSerializer(many=True)
+    technician_with_lowest_paid = TecnicoReportSerializer()
+    technician_with_highest_paid = TecnicoReportSerializer()
+
 class PedidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pedido

@@ -21,19 +21,24 @@ AUTH_USER_MODEL = 'rapihogar.User'
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework.authtoken',
-    'django_extensions',
-    'rapihogar',
-    'api',
-    'rest_framework',
-    'drf_yasg',
-    "django_filters",
+    # Core Django apps that provide essential functionality:
+    'django.contrib.admin',         # Django's admin interface
+    'django.contrib.auth',          # Authentication system for users
+    'django.contrib.contenttypes',  # Handles content types in models
+    'django.contrib.sessions',      # Session management for storing user sessions
+    'django.contrib.messages',      # Framework for temporary messages in views
+    'django.contrib.staticfiles',   # Manages static files like CSS and JavaScript
+
+    # Third-party apps:
+    'rest_framework.authtoken',     # Token-based authentication for Django Rest Framework (DRF)
+    'django_extensions',            # Extra management commands and extensions for Django
+    'rest_framework',               # Main Django Rest Framework (DRF) app for building APIs
+    'drf_yasg',                     # A tool for generating Swagger/OpenAPI documentation for DRF APIs
+    'django_filters',               # Provides filter functionality for REST APIs
+
+    # Custom apps in the project:
+    'rapihogar',                    # Main custom app for your Rapihogar project
+    'api',                          # Separate app for handling the API logic (if needed)
 ]
 
 MIDDLEWARE = [
@@ -126,10 +131,15 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+    # Renderer classes to define how API responses are rendered:
     'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',           # Renders responses as JSON (most common for APIs)
+        'rest_framework.renderers.BrowsableAPIRenderer',   # Provides a web-browsable API interface for testing
     ),
+
+    # Enables filtering in API views by specifying filter backends:
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+
+    # Schema generation for automatic OpenAPI/Swagger documentation using DRF Spectacular:
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }

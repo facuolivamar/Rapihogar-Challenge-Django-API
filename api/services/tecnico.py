@@ -3,6 +3,11 @@ from django.db.models import Sum
 
 
 class TecnicoService:
+    """
+    Service class for managing and calculating specific information for a single Tecnico (technician).
+    The goal is to calculate hours worked, total payment, and the number of service requests ('pedidos')
+    handled by a Tecnico (technician).
+    """
     def __init__(self, tecnico=Tecnico):
         self.id = tecnico.id
         self.full_name = tecnico.full_name
@@ -37,6 +42,11 @@ class TecnicoService:
 
 
 class ReportService:
+    """
+    Service class for generating reports related to multiple Tecnicos (technicians).
+    The objective is to summarize the overall payment information, identify technicians who
+    are paid below the average, and find the technicians with the highest and lowest payments.
+    """
     def __init__(self, queryset):
         self.tecnicos = [TecnicoService(tecnico) for tecnico in queryset]
         self.total_paid = sum(

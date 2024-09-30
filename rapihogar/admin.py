@@ -21,23 +21,29 @@ class LogEntryAdmin(admin.ModelAdmin):
         "action_flag",
     ]
 
+
 class UserAdmin(admin.ModelAdmin):
     list_display = ("id", "full_name", "email")
     list_filter = ["is_active", "is_staff"]
 
+
 class TecnicoAdmin(admin.ModelAdmin):
     list_display = ("id", "full_name", )
+
 
 class SchemeAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
     list_filter = ["name"]
 
+
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "email", "phone", "website")
+
 
 class PedidoAdmin(admin.ModelAdmin):
     list_display = ("id", "type_request", "scheme__name", "technician")
     list_filter = ["type_request", "scheme__name"]
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Tecnico, TecnicoAdmin)

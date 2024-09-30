@@ -18,6 +18,7 @@ class TecnicoFilter(filters.FilterSet):
         model = Tecnico
         fields = ["first_name", "last_name"]
 
+
 class TecnicoListView(generics.ListAPIView):
     queryset = Tecnico.objects.all()
     serializer_class = TecnicoSerializer
@@ -27,6 +28,7 @@ class TecnicoListView(generics.ListAPIView):
     ]
     filterset_class = TecnicoFilter
 
+
 class TecnicoReportView(APIView):
     def get(self, request):
         tecnicos = Tecnico.objects.all()
@@ -34,7 +36,9 @@ class TecnicoReportView(APIView):
 
         data = {
             'average_paid': report_service.get_average_paid(),
-            'technicians_below_average': [tecnico for tecnico in report_service.get_technicians_below_average()],
+            'technicians_below_average': [
+                tecnico for tecnico in report_service.get_technicians_below_average()
+            ],
             'technician_with_lowest_paid': report_service.get_technician_with_lowest_paid(),
             'technician_with_highest_paid': report_service.get_technician_with_highest_paid(),
         }

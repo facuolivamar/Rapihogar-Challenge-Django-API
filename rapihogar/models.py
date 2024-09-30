@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 
 
-class User(AbstractBaseUser, PermissionsMixin):    
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=765, blank=True)
     is_staff = models.BooleanField(default=False)
@@ -23,7 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=100,
         null=True,
     )
-    
+
     @property
     def full_name(self):
         return u"{} {}".format(self.first_name if self.first_name else '',
@@ -37,7 +37,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         app_label = 'rapihogar'
         verbose_name = _('RapiHogar User')
-        verbose_name_plural = _('RapiHogar Users')  
+        verbose_name_plural = _('RapiHogar Users')
 
 
 class Scheme(models.Model):
@@ -60,6 +60,7 @@ class Company(models.Model):
         verbose_name = _('Empresa')
         verbose_name_plural = _('Empresas')
 
+
 class Tecnico(models.Model):
     last_name = models.CharField(
         max_length=100,
@@ -69,7 +70,7 @@ class Tecnico(models.Model):
         max_length=100,
         null=False,
     )
-    
+
     @property
     def full_name(self):
         return u"{} {}".format(self.first_name if self.first_name else '',
@@ -83,7 +84,8 @@ class Tecnico(models.Model):
     class Meta:
         app_label = 'rapihogar'
         verbose_name = _('RapiHogar Tecnico')
-        verbose_name_plural = _('RapiHogar Tecnicos')  
+        verbose_name_plural = _('RapiHogar Tecnicos')
+
 
 class Pedido(models.Model):
     SOLICITUD = 0

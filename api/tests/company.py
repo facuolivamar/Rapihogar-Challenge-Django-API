@@ -14,7 +14,11 @@ class CompanyListCreateAPIViewTestCase(APITestCase):
         self.username = "user_test"
         self.email = "test@rapihigar.com"
         self.password = "Rapi123"
-        self.user = User.objects.create_user(self.username, self.email, self.password)
+        self.user = User.objects.create_user(
+            self.username,
+            self.email,
+            self.password
+            )
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 

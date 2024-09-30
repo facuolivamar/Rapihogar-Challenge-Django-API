@@ -14,13 +14,23 @@ class TecnicoListAPIViewTestCase(APITestCase):
         self.username = "user_test"
         self.email = "test@rapihogar.com"
         self.password = "Rapi123"
-        self.user = User.objects.create_user(self.username, self.email, self.password, first_name="Test", last_name="User")
+        self.user = User.objects.create_user(
+            self.username,
+            self.email,
+            self.password
+            )
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 
         # Crear datos de prueba para técnicos
-        self.tecnico1 = Tecnico.objects.create(first_name="Juan", last_name="Perez")
-        self.tecnico2 = Tecnico.objects.create(first_name="Ana", last_name="Lopez")
+        self.tecnico1 = Tecnico.objects.create(
+            first_name="Juan",
+            last_name="Perez"
+            )
+        self.tecnico2 = Tecnico.objects.create(
+            first_name="Ana",
+            last_name="Lopez"
+            )
 
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
@@ -28,7 +38,18 @@ class TecnicoListAPIViewTestCase(APITestCase):
     def test_list_tecnicos(self):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
-        self.assertEqual(len(json.loads(response.content)), Tecnico.objects.count())
+        self.assertEqual(
+            len(json.loads(response.content)),
+            Tecnico.objects.count()
+            )
+
+        data = json.loads(response.content)
+        self.assertIn('full_name', data[0])
+        self.assertIn('id', data[0])
+        self.assertIn('pedidos_count', data[0])
+        self.assertIn('hours_worked', data[0])
+        self.assertIn('total_paid', data[0])
+
 
 class TecnicoReportAPIViewTestCase(APITestCase):
     url = reverse("tecnico/informe")
@@ -38,7 +59,11 @@ class TecnicoReportAPIViewTestCase(APITestCase):
         self.username = "user_test"
         self.email = "test@rapihogar.com"
         self.password = "Rapi123"
-        self.user = User.objects.create_user(self.username, self.email, self.password, first_name="Test", last_name="User")
+        self.user = User.objects.create_user(
+            self.username,
+            self.email,
+            self.password
+            )
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
 
@@ -52,7 +77,9 @@ class TecnicoReportAPIViewTestCase(APITestCase):
     def test_tecnico_report(self):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
+
         data = json.loads(response.content)
         self.assertIn('average_paid', data)
         self.assertIn('technician_with_lowest_paid', data)
+        self.assertIn('technicians_below_average', data)
         self.assertIn('technician_with_highest_paid', data)
